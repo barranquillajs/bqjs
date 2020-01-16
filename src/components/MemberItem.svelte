@@ -1,25 +1,12 @@
-<li class:member-item="isMember" class:organizer-item="isOrganizer" class="item">
-	<div class="item-inner">
-		<div class:member-image-container="isMember" class:organizer-image-container="isOrganizer" class="item-image-container">
-			<div class="aspect-ratio">
-				<div>
-					<img src={userPhoto} alt="foto de {name}" title="{name}" class="member-photo">
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="member-name">{name}</div>
-</li>
-
 <script>
-  export default {
-    computed: {
-      isMember: ({ role }) => role == "member",
-      isOrganizer: ({ role }) => role == "organizer",
-      userPhoto: ({ photo, name }) =>
-        photo || `https://api.adorable.io/avatars/120/${name}@adorable.png`
-    }
-  };
+  export let role = "";
+  export let photo = "";
+  export let name = "";
+
+  $: isMember = role == "member";
+  $: isOrganizer = role == "organizer";
+  $: userPhoto =
+    photo || `https://api.adorable.io/avatars/120/${name}@adorable.png`;
 </script>
 
 <style>
@@ -85,3 +72,26 @@
     }
   }
 </style>
+
+<li
+  class:member-item={isMember}
+  class:organizer-item={isOrganizer}
+  class="item">
+  <div class="item-inner">
+    <div
+      class:member-image-container={isMember}
+      class:organizer-image-container={isOrganizer}
+      class="item-image-container">
+      <div class="aspect-ratio">
+        <div>
+          <img
+            src={userPhoto}
+            alt="foto de {name}"
+            title={name}
+            class="member-photo" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="member-name">{name}</div>
+</li>
